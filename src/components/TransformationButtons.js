@@ -2,8 +2,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { styles } from "../../styles/App.styles";
 
-const TransformationButtons = props => {
-    const [handleTransformation, resetTransformations] = props.funcs
+const TransformationButtons = (props) => {
+  const [handleTransformation, resetTransformations] = props.funcs;
   return (
     <>
       <View style={styles.transformationButtons}>
@@ -26,13 +26,13 @@ const TransformationButtons = props => {
             style={styles.button}
             onPress={() => handleTransformation("translateY", 1)}
           >
-            <Text style={styles.buttonText}>Yukarı kaydır</Text>
+            <Text style={styles.buttonText}>Aşağı kaydır</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => handleTransformation("translateY", -1)}
           >
-            <Text style={styles.buttonText}>Aşağı kaydır</Text>
+            <Text style={styles.buttonText}>Yukarı kaydır</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonRow}>
@@ -62,10 +62,13 @@ const TransformationButtons = props => {
           >
             <Text style={styles.buttonText}>Y eksenini büyüt</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={resetTransformations}
+          >
+            <Text style={styles.buttonText}>Hepsini sıfırla</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button} onPress={resetTransformations}>
-          <Text style={styles.buttonText}>Kaydırmaları sıfırla</Text>
-        </TouchableOpacity>
       </View>
     </>
   );
