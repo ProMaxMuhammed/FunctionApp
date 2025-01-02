@@ -14,4 +14,23 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "80%",
   },
+  transformationButtons: {
+    marginBottom: 20,
+  },
+  buttonRow: {
+    flexDirection: "row",
+    marginBottom: 5,
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "lightblue",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
 });
