@@ -1,4 +1,3 @@
-// useGraphData.js
 import { useState, useEffect, useCallback } from "react";
 import { evaluate } from "mathjs";
 
@@ -39,12 +38,12 @@ const useGraphData = (equation, transformations, isInputValid) => {
     }
   }, [isInputValid, generateData]);
 
-  // Regenerate data function
+  // Regenerate data function (no need for isInputValid check here)
   const regenerateData = useCallback(() => {
     generateData();
-  }, [generateData]);
+  }, [generateData]); // Depend on generateData
 
-  return { data, regenerateData }; // Make sure you are returning it here
+  return { data, regenerateData };
 };
 
 export default useGraphData;

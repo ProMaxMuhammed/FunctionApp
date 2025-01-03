@@ -3,9 +3,24 @@ import { Text, View } from "react-native";
 import { LineChart, YAxis, XAxis } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import { Line, Svg, Circle } from "react-native-svg";
+
 const Graph = ({ data, transformations, roots }) => {
-  const { translateX, translateY } = transformations;
+  const { translateX, translateY, scaleY } = transformations;
   const contentInset = { top: 30, bottom: 30, left: 20, right: 20 };
+
+  // Calculate yMin and yMax from the data
+  const yValues = data.map((item) => item.y);
+  const yMin = Math.min(...yValues);
+  const yMax = Math.max(...yValues);
+
+  const maxAbsY = Math.max(Math.abs(yMin), Math.abs(yMax));
+  const padding = 5; // You can adjust this padding value
+  const transformedMaxAbsY = Math.ceil(
+    maxAbsY * scaleY + Math.abs(translateY) + padding
+  );
+  const yAxisMin = -transformedMaxAbsY;
+  const yAxisMax = transformedMaxAbsY;
+
   function AxisY() {
     return (
       <YAxis
@@ -19,9 +34,12 @@ const Graph = ({ data, transformations, roots }) => {
         formatLabel={(value) => `${value}`}
         yAccessor={({ item }) => item.y}
         style={{ height: 300 - 25 }}
+        min={-5}
+        max={5}
       />
     );
   }
+
   function AxisX() {
     return (
       <XAxis
@@ -37,6 +55,7 @@ const Graph = ({ data, transformations, roots }) => {
       />
     );
   }
+
   function RedAxisX() {
     return (
       <Line
@@ -50,6 +69,7 @@ const Graph = ({ data, transformations, roots }) => {
       />
     );
   }
+
   function RedAxisY() {
     return (
       <Line
@@ -63,28 +83,33 @@ const Graph = ({ data, transformations, roots }) => {
       />
     );
   }
+
   function RootsCircle() {
-    return roots.map((root) => {
-      const xValue = root.x;
-      const yValue = 0; // Root is on the x-axis
+    return (
+      <>
+        {roots.map((root) => {
+          const xValue = root.x;
 
-      // Calculate position of root
-      const rootX = ((xValue - -10) / (10 - -10)) * 100 + translateX * 5;
-      const rootY = 50 - translateY * 5;
+          // Calculate position of root
+          const rootX = ((xValue - -10) / (10 - -10)) * 100 + translateX * 5;
+          const rootY = 50 - translateY * 5;
 
-      return (
-        <Circle
-          key={`root-${root.x}`}
-          cx={`${rootX}%`}
-          cy={`${rootY}%`}
-          r={4}
-          fill="green"
-          stroke="black"
-          strokeWidth={1}
-        />
-      );
-    });
+          return (
+            <Circle
+              key={`root-${root.x}`}
+              cx={`${rootX}%`}
+              cy={`${rootY}%`}
+              r={4}
+              fill="green"
+              stroke="black"
+              strokeWidth={1}
+            />
+          );
+        })}
+      </>
+    );
   }
+
   function Chart() {
     return (
       <LineChart
@@ -95,6 +120,8 @@ const Graph = ({ data, transformations, roots }) => {
         curve={shape.curveNatural}
         xAccessor={({ item }) => item.x}
         yAccessor={({ item }) => item.y}
+        yMin={yAxisMin}
+        yMax={yAxisMax}
       >
         <Svg>
           <RedAxisX />
