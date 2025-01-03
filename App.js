@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button } from "react-native";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles/App.styles";
 import TransformationButtons from "./src/components/TransformationButtons";
 import Graph from "./src/components/Graph";
@@ -52,15 +52,17 @@ const FunctionGraph = () => {
         onChangeText={handleInputChange}
         placeholder="Fonksiyon Yazın! 😊 (örn: x^2)"
       />
-      <Button
-        title="Göster"
+      <TouchableOpacity
+        style={{...styles.button, marginBottom:5}}
         onPress={() => {
           if (isInputValid) {
             regenerateData();
           }
         }}
         disabled={!isInputValid}
-      />
+      >
+        <Text>Göster</Text>
+      </TouchableOpacity>
 
       <TransformationButtons
         funcs={[handleTransformation, resetTransformations]}
