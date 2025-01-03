@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "./styles/App.styles";
 import TransformationButtons from "./src/components/TransformationButtons";
 import Graph from "./src/components/Graph";
+import FunctionPresets from "./src/components/FunctionPresets"; // Import the component
 import useGraphData from "./src/hooks/useGraphData";
 import useInputValidation from "./src/hooks/useInputValidation";
 import useDynamicInput from "./src/hooks/useDynamicInput";
@@ -42,37 +43,40 @@ const FunctionGraph = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        ref={inputRef}
-        style={styles.input}
-        value={equation}
-        onChangeText={handleInputChange}
-        placeholder="Fonksiyon Yazın! 😊 (örn: x^2)"
-      />
-      {/* Error Message */}
-      {!isInputValid && errorMessage && (
-        <Text style={{ color: "red" }}>{errorMessage}</Text>
-      )}
-      <TouchableOpacity
-        style={{ ...styles.button, marginBottom: 5 }}
-        onPress={() => {
-          if (isInputValid) {
-            regenerateData();
-          }
-        }}
-        disabled={!isInputValid}
-      >
-        <Text>Göster</Text>
-      </TouchableOpacity>
+      <ScrollView contentContainerStyle={{alignItems:"center", flex:1, padding:0,margin:0}}>
+        <TextInput
+          ref={inputRef}
+          style={styles.input}
+          value={equation}
+          onChangeText={handleInputChange}
+          placeholder="Fonksiyon Yazın! 😊 (örn: x^2)"
+        />
+        <FunctionPresets setEquation={setEquation} />
+        {/* Error Message */}
+        {!isInputValid && errorMessage && (
+          <Text style={{ color: "red" }}>{errorMessage}</Text>
+        )}
+        <TouchableOpacity
+          style={{ ...styles.button, marginBottom: 5 }}
+          onPress={() => {
+            if (isInputValid) {
+              regenerateData();
+            }
+          }}
+          disabled={!isInputValid}
+        >
+          <Text>Göster</Text>
+        </TouchableOpacity>
 
-      <TransformationButtons
-        funcs={[handleTransformation, resetTransformations]}
-      />
-      <Graph
-        data={data}
-        transformations={transformations}
-        roots={roots} // Pass the roots to the Graph component
-      />
+        <TransformationButtons
+          funcs={[handleTransformation, resetTransformations]}
+        />
+        <Graph
+          data={data}
+          transformations={transformations}
+          roots={roots} // Pass the roots to the Graph component
+        />
+      </ScrollView>
     </View>
   );
 };

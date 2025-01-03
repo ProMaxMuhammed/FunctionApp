@@ -16,7 +16,8 @@
     "react-native": "0.76.5",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-svg": "15.8.0",
-    "react-native-svg-charts": "^5.4.0"
+    "react-native-svg-charts": "^5.4.0",
+    "@react-native-picker/picker": "2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
