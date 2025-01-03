@@ -6,6 +6,7 @@ import Graph from "./src/components/Graph";
 import useGraphData from "./src/hooks/useGraphData";
 import useInputValidation from "./src/hooks/useInputValidation";
 import useDynamicInput from "./src/hooks/useDynamicInput";
+
 const FunctionGraph = () => {
   const [equation, setEquation] = useState("x");
   const [transformations, setTransformations] = useState({
