@@ -6,14 +6,14 @@ import Graph from "./src/components/Graph";
 import useGraphData from "./src/hooks/useGraphData";
 import useInputValidation from "./src/hooks/useInputValidation";
 import useDynamicInput from "./src/hooks/useDynamicInput";
-
+import useRoots from "./src/hooks/useRoots";
 const FunctionGraph = () => {
   const [equation, setEquation] = useState("x");
   const [transformations, setTransformations] = useState({
     translateX: 0,
     translateY: 0,
-    scaleX: 1,
-    scaleY: 1,
+    scaleX: 0.5,
+    scaleY: 0.5,
   });
 
   const { isValid: isInputValid, handleInputChange } = useInputValidation(
@@ -25,6 +25,7 @@ const FunctionGraph = () => {
     transformations,
     isInputValid
   );
+  const { roots } = useRoots(equation, transformations, isInputValid);
   const handleTransformation = (type, value) => {
     setTransformations((prev) => ({ ...prev, [type]: prev[type] + value }));
   };
@@ -33,15 +34,10 @@ const FunctionGraph = () => {
     setTransformations({
       translateX: 0,
       translateY: 0,
-      scaleX: 1,
-      scaleY: 1,
+      scaleX: 0.5,
+      scaleY: 0.5,
     });
   };
-
-  const contentInset = { top: 30, bottom: 30, left: 20, right: 20 };
-
-  const xAxisHeight = 25;
-  const yAxisWidth = 25;
 
   return (
     <View style={styles.container}>
@@ -53,7 +49,7 @@ const FunctionGraph = () => {
         placeholder="Fonksiyon Yazın! 😊 (örn: x^2)"
       />
       <TouchableOpacity
-        style={{...styles.button, marginBottom:5}}
+        style={{ ...styles.button, marginBottom: 5 }}
         onPress={() => {
           if (isInputValid) {
             regenerateData();
@@ -70,9 +66,7 @@ const FunctionGraph = () => {
       <Graph
         data={data}
         transformations={transformations}
-        contentInset={contentInset}
-        xAxisHeight={xAxisHeight}
-        yAxisWidth={yAxisWidth}
+        roots={roots} // Pass the roots to the Graph component
       />
     </View>
   );
