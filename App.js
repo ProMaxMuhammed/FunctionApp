@@ -16,10 +16,11 @@ const FunctionGraph = () => {
     scaleY: 0.5,
   });
 
-  const { isValid: isInputValid, handleInputChange } = useInputValidation(
-    setEquation,
-    setTransformations
-  );
+  const {
+    isValid: isInputValid,
+    handleInputChange,
+    errorMessage,
+  } = useInputValidation(setEquation, setTransformations);
   const { data, regenerateData } = useGraphData(
     equation,
     transformations,
@@ -48,6 +49,10 @@ const FunctionGraph = () => {
         onChangeText={handleInputChange}
         placeholder="Fonksiyon Yazın! 😊 (örn: x^2)"
       />
+      {/* Error Message */}
+      {!isInputValid && errorMessage && (
+        <Text style={{ color: "red" }}>{errorMessage}</Text>
+      )}
       <TouchableOpacity
         style={{ ...styles.button, marginBottom: 5 }}
         onPress={() => {
