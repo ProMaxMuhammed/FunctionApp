@@ -4,70 +4,27 @@ import { styles } from "../../styles/App.styles";
 
 const TransformationButtons = (props) => {
   const [handleTransformation, resetTransformations] = props.funcs;
+  function TransformationButton({task}) {
+    return (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={task.onpress}
+      >
+        <Text style={styles.buttonText}>{task.text}</Text>
+      </TouchableOpacity>
+    );
+  }
   return (
     <>
       <View style={styles.transformationButtons}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("translateX", -1)}
-          >
-            <Text style={styles.buttonText}>Sola kaydır</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("translateX", 1)}
-          >
-            <Text style={styles.buttonText}>Sağa kaydır</Text>
-          </TouchableOpacity>
+          <TransformationButton task={{onpress:() => handleTransformation("scaleX", 0.1),text:"X eksenini Küçült"}}/>
+          <TransformationButton task={{onpress:() => handleTransformation("scaleX", -0.1),text:"X eksenini Büyüt"}}/>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("translateY", 1)}
-          >
-            <Text style={styles.buttonText}>Aşağı kaydır</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("translateY", -1)}
-          >
-            <Text style={styles.buttonText}>Yukarı kaydır</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("scaleX", 0.1)}
-          >
-            <Text style={styles.buttonText}>X eksenini küçült</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("scaleX", -0.1)}
-          >
-            <Text style={styles.buttonText}>X eksenini büyüt</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("scaleY", 0.1)}
-          >
-            <Text style={styles.buttonText}>Y eksenini küçült</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleTransformation("scaleY", -0.1)}
-          >
-            <Text style={styles.buttonText}>Y eksenini büyüt</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={resetTransformations}
-          >
-            <Text style={styles.buttonText}>Hepsini sıfırla</Text>
-          </TouchableOpacity>
+        <TransformationButton task={{onpress:() => handleTransformation("scaleY", 0.1),text:"Y eksenini Küçült"}}/>
+        <TransformationButton task={{onpress:() => handleTransformation("scaleY", -0.1),text:"Y eksenini Büyüt"}}/>
+        <TransformationButton task={{resetTransformations,text:"Hepsini Sıfırla"}}/>
         </View>
       </View>
     </>
